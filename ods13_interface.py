@@ -35,7 +35,7 @@ class Aplication():
 
         self.frame_2 = Frame(self.root, bd=4, bg='#dfe3ee',
                              highlightbackground='#759fe6', highlightthickness=5)
-        self.frame_2.place(relx=0.02, rely=0.50, relwidth=0.96, relheight=0.45)
+        self.frame_2.place(relx=0.02, rely=0.50, relwidth=0.49, relheight=0.12)
 
     def mostrar_emissao(self):
         regioes = ["Norte", "Sul", "Centro"]
