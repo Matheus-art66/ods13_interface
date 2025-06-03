@@ -2,13 +2,13 @@ from tkinter import *
 from tkinter import messagebox
 from collections import deque
 
-acoes = []
-fila = deque()
+acoes = []  # Estrutura: Vetor
+fila = deque() # Estrutura: Fila
 emissao_co2 = [         
     [12.1, 13.0, 11.4],
     [9.8, 10.5, 8.9],
     [14.2, 15.0, 13.7]
-]
+]# Estrutura: Matriz
 
 
 class Aplication():
@@ -23,10 +23,18 @@ class Aplication():
     def tela(self):
         self.root.title('ODS 13 - Sustentabilidade')
         self.root.configure(background='#1e3743')
-        self.root.geometry('700x500')
+        self.root.geometry('500x350')
         self.root.resizable(True, True)
         self.root.maxsize(width=900, height=700)
         self.root.minsize(width=400, height=300)
+
+    def mostrar_fila(self):
+        if fila:
+            texto = "\n".join(fila)
+            messagebox.showinfo("Fila de Validação", texto)
+        else:
+            messagebox.showinfo("Fila", "Nenhuma ação pendente.")
+
 
     def frames_da_tela(self):
         self.frame_1 = Frame(self.root, bd=4, bg='#dfe3ee',
@@ -35,7 +43,7 @@ class Aplication():
 
         self.frame_2 = Frame(self.root, bd=4, bg='#dfe3ee',
                              highlightbackground='#759fe6', highlightthickness=5)
-        self.frame_2.place(relx=0.02, rely=0.50, relwidth=0.49, relheight=0.12)
+        self.frame_2.place(relx=0.02, rely=0.70, relwidth=0.96, relheight=0.18)
 
     def mostrar_emissao(self):
         regioes = ["Norte", "Sul", "Centro"]
@@ -52,31 +60,35 @@ class Aplication():
 
         self.btn_add = Button(self.frame_1, text="Cadastrar", command=self.adicionar_acao)
         self.btn_add.place(x=130, y=40)
+        self.btn_fila = Button(self.frame_1, text="Ver Fila de Validação", command=self.mostrar_fila)
+        self.btn_fila.place(x=180, y=110)
 
 
     def widgets_frame2(self):
-        # Visualizar ações
         self.btn_ver = Button(self.frame_2, text="Ver Ações Cadastradas", command=self.mostrar_acoes)
         self.btn_ver.place(x=10, y=10)
 
         self.btn_emicao = Button(self.frame_2, text="Ver Emissão de CO₂",  command=self.mostrar_emissao)
-        self.btn_emicao.place(x=200, y =10)
+        self.btn_emicao.place(x=169, y =10)
+
+        self.btn_limpar = Button(self.frame_2, text="Limpar Ações cadastradas")
+        self.btn_limpar.place(x=310, y =10)
 
     def adicionar_acao(self):
         acao = self.entry_acao.get()
         if acao:
             acoes.append(acao)
-            messagebox.showinfo("Sucesso", "Ação adicionada!")
+            fila.append(acao)  
+            messagebox.showinfo("Sucesso", "Ação adicionada à fila de validação!")
             self.entry_acao.delete(0, END)
         else:
             messagebox.showwarning("Erro", "Digite uma ação válida.")
-
+     
     def mostrar_acoes(self):
         if acoes:
             texto = "\n".join(acoes)
             messagebox.showinfo("Ações", texto)
         else:
             messagebox.showinfo("Ações", "Nenhuma ação cadastrada.")
-
 root = Tk()
 Aplication()
